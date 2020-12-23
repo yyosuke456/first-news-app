@@ -15,6 +15,7 @@ export default ArticleScreen = ({ route }) => {
   const { article } = route.params;
 
   const dispatch = useDispatch();
+
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
