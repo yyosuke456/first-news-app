@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, SafeAreaView } from "react-native";
 import ListItem from "../components/ListItem";
+import Loading from "../components/Loading";
 import Constants from "expo-constants";
 import axios from "axios";
 
@@ -16,11 +17,13 @@ const styles = StyleSheet.create({
 export default HomeScreen = (props) => {
   const { navigation } = props;
   const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     fetchArticles();
   }, []);
 
   const fetchArticles = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(URL);
       console.log(response);
@@ -28,6 +31,7 @@ export default HomeScreen = (props) => {
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
 
   return (
@@ -44,6 +48,7 @@ export default HomeScreen = (props) => {
         )}
         keyExtractor={(item, index) => index.toString()}
       />
+      {loading && <Loading />}
     </SafeAreaView>
   );
 };
